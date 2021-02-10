@@ -23,5 +23,5 @@ const UsuariosSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.moder('Usuario', UsuariosSchema);
+module.exports = mongoose.model('Usuario', UsuariosSchema);
 // le decimos a mongoose que vamos a registrar el modelo Usuaio con el schema UsuariosSchema
