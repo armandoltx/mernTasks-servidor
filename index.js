@@ -7,6 +7,9 @@ const app = express();
 // Conectar a la base de datos
 conectarDB();
 
+// Habilitar express.json q nos va a permitir leer datos q el usuario coloque en el formulario
+app.use(express.json({ extend: true }));
+
 // puerto de la app
 const PORT = process.env.PORT || 4000;
 
