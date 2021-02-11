@@ -1,7 +1,14 @@
 const Usuario = require('../models/Usuario');
 const bcryptjs = require('bcryptjs');
+const { validationResult } = require('express-validator');
 
 exports.crearUsuario = async (req, res) => { // req ==> lo q el usuario envia || res => lo q enviamos de vuelta
+
+  // Revisar si hay errores
+  const errores = validationResult(req);
+  if(!errores.isEmpty()) {
+    return res.status(400).json({ errores: errores.array() });
+  }
 
   // hacemos destructuring para extraer emaily password
   const { email, password } = req.body;
