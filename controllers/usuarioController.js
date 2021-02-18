@@ -52,7 +52,6 @@ exports.crearUsuario = async (req, res) => { // req ==> lo q el usuario envia ||
         res.json({ token });
       })
 
-      
 
   } catch (error) {
     console.log(error);
