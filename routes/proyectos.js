@@ -17,7 +17,7 @@ router.post('/',
 
 router.get('/',
   auth, // verifica lo q pasa en auth y luego va al siguiente middleware, en este caso el controller
-  proyectoController.crearProyecto
+  proyectoController.obtenerProyectos
 );
 
 module.exports = router;
