@@ -87,3 +87,34 @@ exports.acutalizarProyecto = async (req, res) => {
     res.status(500).send("No se pudo actualizar el proyecto.");
   }
 }
+
+// Eliminar un Proyecto por su ID
+
+exports.eliminarProyecto = async (req, res) => {
+
+  try {
+
+    // Revisar el ID
+    // console.log(req.params.id); // nos manda a consola el id de la peticion
+    let proyecto = await Proyecto.findById(req.params.id);
+
+    // Si el proyecto existe o no
+    if(!proyecto) {
+      return res.status(404).json({msg: 'Proyecto no encontrado'})
+    }
+
+    // Verificar el creador del proyecto
+    if(proyecto.creador.toString() !== req.usuario.id) { // req.usuario viene the auth
+      return res.status(401).json({msg: 'No autorizado'});
+    }
+
+    // Eliminar el proyecto
+    await Proyecto.findOneAndRemove({_id: req.params.id});
+
+    res.json({msg: 'Proyecto eliminado'});
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("No se pudo eliminar el proyecto.");
+  }
+}

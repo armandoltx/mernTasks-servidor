@@ -30,4 +30,10 @@ router.put('/:id',
   proyectoController.acutalizarProyecto
 );
 
+// Eliminar un proyecto
+router.delete('/:id',
+  auth, // verifica lo q pasa en auth y luego va al siguiente middleware, en este caso el controller
+  proyectoController.eliminarProyecto
+);
+
 module.exports = router;
