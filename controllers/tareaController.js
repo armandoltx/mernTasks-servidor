@@ -104,7 +104,36 @@ exports.actualizarTarea = async (req, res) => {
      tarea = await Tarea.findOneAndUpdate({_id: req.params.id}, nuevaTarea, {new: true});
      res.json({tarea});
 
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Hubo un error actualizando la tarea');
+  }
+}
 
+exports.eliminarTarea = async (req, res) => {
+  try {
+    // Extraer el proyecto
+    const { proyecto } = req.body;
+
+    // revisar si la tarea existe
+    let tarea = await Tarea.findById(req.params.id);
+
+    // Si la tarea no existe
+    if(!tarea) {
+      return res.status(404).json({msg: 'No existe esa Tarea'});
+    }
+
+    // extraer proyecto
+    const existeProyecto = await Proyecto.findById(proyecto);
+
+    // Revisar si el proyecto actual pertenece al usuario autenticado
+    if(existeProyecto.creador.toString() !== req.usuario.id) { // req.usuario viene the auth
+      return res.status(401).json({msg: 'No autorizado'});
+    }
+
+    // Eliminar
+    await Tarea.findOneAndRemove({_id: req.params.id});
+    res.json({msg: 'Tarea eliminada'});
 
   } catch (error) {
     console.log(error);
